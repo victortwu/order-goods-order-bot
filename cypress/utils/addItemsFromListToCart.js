@@ -45,12 +45,14 @@ const searchAndAddItem = (searchTerm, itemName, quantity, isCase) => {
 };
 
 export const addItemsFromListToCart = (itemList) => {
-  itemList.forEach((item) => {
-    searchAndAddItem(
-      item.searchTerm,
-      item.itemName,
-      item.quantity,
-      item.isCase
-    );
+  itemList.forEach((listItem) => {
+    const { item, quantity } = listItem;
+    const { vendorProductName, upc, vendorID } = item;
+    const { number, caseOrUnit } = quantity;
+    const isCase = caseOrUnit === 'case' ? true : false;
+
+    if (vendorID !== 'Restuarant Depot') return;
+
+    searchAndAddItem(vendorProductName, upc, number, isCase);
   });
 };
